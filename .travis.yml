@@ -4,5 +4,6 @@ services:
   - docker
 
 before_install:
+  - cd java
   - mvn clean install -DskipTests -f ./config-service/pom.xml
   - docker build -t stockservice/config-service ./config-service
