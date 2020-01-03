@@ -1,6 +1,8 @@
 sudo: required
+language: java
 services: 
   - docker
 
 before_install:
+  - mvn clean install -DskipTests -f ./config-service/pom.xml
   - docker build -t stockservice/config-service ./config-service
