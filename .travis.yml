@@ -4,5 +4,5 @@ jdk: openjdk8
 services: 
   - docker
 script: 
-  - mvnw clean install -DskipTests -f ./config-service/pom.xml
+  - mvn clean install -DskipTests -f ./config-service/pom.xml
   - docker build -t stockservice/config-service ./config-service
