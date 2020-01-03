@@ -3,4 +3,4 @@ services:
   - docker
 
 before_install:
-  - docker build -t stockservice/config-service-f Dockerfile ./config-service
+  - docker build -t stockservice/config-service ./config-service
