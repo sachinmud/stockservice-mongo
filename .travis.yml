@@ -6,3 +6,14 @@ services:
 script: 
   - mvn clean install -DskipTests -f ./config-service/pom.xml
   - docker build -t stockservice/config-service ./config-service
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "config-service"
+  env: "ConfigService-env"
+  bucket_name: "elasticbeanstalk-us-east-2-711023461794"
+  bucket_path: "config-service"
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
