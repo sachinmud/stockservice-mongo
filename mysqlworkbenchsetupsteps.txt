@@ -1,0 +1,164 @@
+Git Commands
+-------------
+git add portfolioserviceconfig/
+git commit -m "updated"
+git push origin master
+sachinmudigere
+Shivam@0569
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Open SQL Developer and navigate to "Tools > Preferences > Database > Third Party JDBC Driver".
+
+Click the "Add Entry..." button and highlight the "mysql-connector-java-5.1.30-bin.jar" file and click the "Select" button.
+
+Click the "OK" button to exit the "Preferences" dialog.
+
+When you create a new connection, you will notice a "MySQL" tab has now appeared. Enter the connection details and test the connection.
+
+To Connect
+mysql -P 3306 --protocol=tcp -u root -p
+
+To create database
+create database tradeservicedb
+use tradeservicedb
+CREATE USER 'tradeservice'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON tradeservicedb.* TO 'tradeservice'@'%';
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'tradeservice'@'%';
+
+
+ALTER USER 'tradeservice'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+
+create database portfolioservicedb
+use portfolioservicedb
+CREATE USER 'portfolioservice'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON portfolioservicedb.* TO 'portfolioservice'@'%';
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'portfolioservice'@'%';
+
+create database userservicedb
+use userservicedb
+CREATE USER 'userservice'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON userservicedb.* TO 'userservice'@'%';
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'userservice'@'%';
+
+create database eventuatedb;
+use eventuatedb;
+CREATE USER 'eventuate'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON eventuatedb.* TO 'eventuate'@'%';
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'eventuate'@'%';
+
+
+------------------------------Default Services------------------------------------------------------------------------------------------------------
+mvn spring-boot:run
+
+config-service
+discovery-service
+
+------------------------------Swagger URL------------------------------------------------------------------------------------------------------------
+http://localhost:8085/swagger-ui.html -- Port number will be of that particular service which is up
+http://localhost:8085/v2/api-docs
+
+------------------------Config Service Verification-----------------------------------------------------------------------------------------------
+http://localhost:8888/portfolioserviceconfig/dev
+http://localhost:8888/tradeserviceconfig/dev
+
+-------------------------Discovery service---------------------------------------------------------------
+http://localhost:8761/
+
+
+
+--------------------------Python------------------------------------------------------------------------------
+==> For changes to take effect, close and re-open your current shell. <==
+
+If you'd prefer that conda's base environment not be activated on startup, 
+   set the auto_activate_base parameter to false: 
+
+conda config --set auto_activate_base false
+
+Thank you for installing Anaconda3!
+
+---------------------------------Kafka------------------------------
+export DOCKER_HOST_IP=192.168.48.136
+cd ~/kafkadocker/kafka-stack-docker-compose/
+docker-compose -f zk-single-kafka-single.yml up -d
+
+cd ~/kafka_2.12-2.0.0/bin/
+./kafka-topics.sh --zookeeper localhost:2181 --list
+
+./kafka-console-consumer.sh --from-beginning --bootstrap-server localhost:9092 --topic portfolioservice
+
+./kafka-console-consumer.sh  --from-beginning --bootstrap-server localhost:9092 --property print.key=true  --property print.value=false --property print.partition --topic portfolioservice --timeout-ms 5000 | tail -n 10|grep "Processed a total of"
+
+---------------------------Sage Tables--------------------------------------------------------
+DROP Table IF Exists saga_instance_participants;
+DROP Table IF Exists saga_instance;
+DROP Table IF Exists saga_lock_table;
+DROP Table IF Exists saga_stash_table;
+
+CREATE TABLE saga_instance_participants (
+  saga_type VARCHAR(100) NOT NULL,
+  saga_id VARCHAR(100) NOT NULL,
+  destination VARCHAR(100) NOT NULL,
+  resource VARCHAR(100) NOT NULL,
+  PRIMARY KEY(saga_type, saga_id, destination, resource)
+);
+
+CREATE TABLE saga_instance(
+  saga_type VARCHAR(100) NOT NULL,
+  saga_id VARCHAR(100) NOT NULL,
+  state_name VARCHAR(100) NOT NULL,
+  last_request_id VARCHAR(100),
+  end_state BOOLEAN,
+  compensating BOOLEAN,
+  saga_data_type VARCHAR(1000) NOT NULL,
+  saga_data_json VARCHAR(1000) NOT NULL,
+  PRIMARY KEY(saga_type, saga_id)
+);
+
+create table saga_lock_table(
+  target VARCHAR(100) PRIMARY KEY,
+  saga_type VARCHAR(100) NOT NULL,
+  saga_Id VARCHAR(100) NOT NULL
+);
+
+create table saga_stash_table(
+  message_id VARCHAR(100) PRIMARY KEY,
+  target VARCHAR(100) NOT NULL,
+  saga_type VARCHAR(100) NOT NULL,
+  saga_id VARCHAR(100) NOT NULL,
+  message_headers VARCHAR(1000) NOT NULL,
+  message_payload VARCHAR(1000) NOT NULL
+  );
+
+ CREATE TABLE message (
+ id VARCHAR(767) PRIMARY KEY,
+ destination VARCHAR(1000) NOT NULL,
+ headers VARCHAR(1000) NOT NULL,
+ payload VARCHAR(2000) NOT NULL,
+ creation_time VARCHAR(2000) DEFAULT NULL
+);
+
+--------------------------Eventuate jars upload-------------------------------------------
+mvn install:install-file -Dfile=eventuate-tram-sagas-participant-0.12.0.RC5.jar -DpomFile=eventuate-tram-sagas-participant-0.12.0.RC5.pom
+  mvn install:install-file -Dfile=eventuate-tram-sagas-common-0.12.0.RC5.jar -DpomFile=eventuate-tram-sagas-common-0.12.0.RC5.pom
+  mvn install:install-file -Dfile=eventuate-tram-sagas-orchestration-0.12.0.RC5.jar -DpomFile=eventuate-tram-sagas-orchestration-0.12.0.RC5.pom
+  mvn install:install-file -Dfile=eventuate-tram-sagas-simple-dsl-0.12.0.RC5.jar -DpomFile=eventuate-tram-sagas-simple-dsl-0.12.0.RC5.pom
+
+-------------------------------Docker-------------------------------------------------------------
+docker build -t stockservice/configservice .
+docker run -d -p 8888:8888 stockservice/configservice
+
+docker build -t stockservice/discoveryservice .
+docker run -d -p 8761:8761 stockservice/discoveryservice
+
+docker build -t stockservice/cdcservice .
+docker run -d -p 8099:8099 stockservice/cdcservice
+  
+
+	

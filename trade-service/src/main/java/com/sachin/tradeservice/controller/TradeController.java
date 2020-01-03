@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sachin.tradeservice.domain.StockOrder;
+import com.sachin.tradeservice.model.StockOrderModel;
 import com.sachin.tradeservice.service.TradeService;
 
 import io.swagger.annotations.Api;
@@ -19,12 +20,12 @@ public class TradeController {
 	TradeService service;
 	
 	@RequestMapping(value = "/buystock")
-	public StockOrder buyStock(@RequestBody StockOrder order) {
+	public StockOrderModel buyStock(@RequestBody StockOrderModel order) {
 		return service.buyStock(order);
 	}
 	
 	@RequestMapping(value = "/sellstock")
-	public StockOrder sellStock(@RequestBody StockOrder order) {
+	public StockOrderModel sellStock(@RequestBody StockOrderModel order) {
 		return service.sellStock(order);
 	}	
 

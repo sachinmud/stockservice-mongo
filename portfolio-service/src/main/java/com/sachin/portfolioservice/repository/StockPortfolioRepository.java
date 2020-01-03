@@ -1,13 +1,16 @@
 package com.sachin.portfolioservice.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.sachin.portfolioservice.domain.StockPortfolio;
 
+@Repository
 public interface StockPortfolioRepository extends JpaRepository<StockPortfolio, Long>{
 	
-	Page<StockPortfolio> findByPortfolioId(Long portfolioId, Pageable pageable);
+	@Query(value = "select * from stockportfolio sp where sp.portfolioid = :portfolioId", nativeQuery = true)
+	StockPortfolio findByPortfolioId(@Param("portfolioId") Long portfolioId);
 
 }

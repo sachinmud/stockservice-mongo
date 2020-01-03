@@ -14,13 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,10 +35,10 @@ public class StockPortfolio implements Serializable {
 	@Column(name = "STOCKPORTFOLIOID")
 	private long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PORTFOLIOID")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Portfolio portfolio;
+	private UserPortfolio portfolio;
 	
 	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,11 +58,11 @@ public class StockPortfolio implements Serializable {
 		this.id = id;
 	}
 
-	public Portfolio getPortfolio() {
+	public UserPortfolio getPortfolio() {
 		return portfolio;
 	}
 
-	public void setPortfolio(Portfolio portfolio) {
+	public void setPortfolio(UserPortfolio portfolio) {
 		this.portfolio = portfolio;
 	}
 

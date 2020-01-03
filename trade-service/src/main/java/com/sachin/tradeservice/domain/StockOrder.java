@@ -47,6 +47,9 @@ public class StockOrder {
 	@Column(name = "QUANTITY")
 	private long quantity;
 	
+	@Column(name = "USERID")
+    private Long userId;
+	
 	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -103,6 +106,14 @@ public class StockOrder {
 
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;
+	}
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public Date getCreatedDate() {

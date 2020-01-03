@@ -1,11 +1,14 @@
 package com.sachin.tradeservice.service;
 
 import com.sachin.tradeservice.domain.StockOrder;
+import com.sachin.tradeservice.model.StockOrderModel;
 
 public interface TradeService {
 	
-	public StockOrder buyStock(StockOrder order);
+	public StockOrderModel buyStock(StockOrderModel order);
 	
-	public StockOrder sellStock(StockOrder order);
+	public StockOrderModel sellStock(StockOrderModel order);
+	
+	public boolean deleteOrder(long orderId);
 
 }

@@ -11,14 +11,38 @@
 	<groupId>com.sachin</groupId>
 	<artifactId>trade-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>trade-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<eventuateTramVersion>0.22.0.RC5</eventuateTramVersion>
+		<eventuateTramSagasVersion>0.13.4.RELEASE</eventuateTramSagasVersion>
+		<eventuateCommonVersion>0.12.0.RC5</eventuateCommonVersion>
+		<eventuateMessagingKafkaVersion>0.12.0.RC5</eventuateMessagingKafkaVersion>
 	</properties>
-
+	<repositories>
+        <repository>
+            <id>eventuate-tram-rc</id>
+            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-rc/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>eventuate-tram-release</id>
+            <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,7 +84,85 @@
 		    <artifactId>springfox-swagger-ui</artifactId>
 		    <version>2.9.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>
+				spring-cloud-starter-netflix-eureka-client
+			</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sachin</groupId>
+		    <artifactId>commons</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-orchestration -->
+<!-- 
+		<dependency>
+		    <groupId>io.eventuate.tram.sagas</groupId>
+		    <artifactId>eventuate-tram-sagas-orchestration</artifactId>
+		    <version>0.11.1.RELEASE</version>
+		    <version>${eventuateCommonVersion}</version>
+		</dependency>
+-->
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-jdbc -->
+<!-- 
+		<dependency>
+		    <groupId>io.eventuate.tram.core</groupId>
+		    <artifactId>eventuate-tram-jdbc</artifactId>
+		    <version>0.13.4.RELEASE</version>
+		</dependency>
+ -->		
+		<dependency>
+		    <groupId>io.eventuate.tram.core</groupId>
+		    <artifactId>eventuate-tram-jdbc-kafka</artifactId>
+		    <!-- <version>0.13.4.RELEASE</version> -->		    
+		    <version>${eventuateTramVersion}</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.eventuate.tram.core</groupId>
+		    <artifactId>eventuate-tram-commands</artifactId>
+		    <!-- <version>0.13.4.RELEASE</version> -->		    
+		    <version>${eventuateTramVersion}</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.core/eventuate-tram-messaging -->
+		<dependency>
+		    <groupId>io.eventuate.tram.core</groupId>
+		    <artifactId>eventuate-tram-messaging</artifactId>
+		    <version>${eventuateTramVersion}</version>
+		</dependency>
 
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-simple-dsl -->
+		<dependency>
+		    <groupId>io.eventuate.tram.sagas</groupId>
+		    <artifactId>eventuate-tram-sagas-simple-dsl</artifactId>
+		    <!--  <version>0.13.4.RELEASE</version>  -->		    
+		    <version>${eventuateCommonVersion}</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-jpa-sagas-framework -->
+		<dependency>
+		    <groupId>io.eventuate.tram.sagas</groupId>
+		    <artifactId>eventuate-jpa-sagas-framework</artifactId>
+		    <!-- <version>0.13.4.RELEASE</version> -->		    
+		    <version>${eventuateCommonVersion}</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-participant -->
+		<dependency>
+		    <groupId>io.eventuate.tram.sagas</groupId>
+		    <artifactId>eventuate-tram-sagas-participant</artifactId>
+		    <!--  <version>0.13.4.RELEASE</version>  -->
+		    <version>${eventuateCommonVersion}</version>
+		</dependency>
+<!-- https://mvnrepository.com/artifact/io.eventuate.tram.sagas/eventuate-tram-sagas-common -->
+		<dependency>
+		    <groupId>io.eventuate.tram.sagas</groupId>
+		    <artifactId>eventuate-tram-sagas-common</artifactId>
+		    <!--  <version>0.13.4.RELEASE</version>  -->		    
+		    <version>${eventuateCommonVersion}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,4 +174,40 @@
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Greenwich.SR2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+    <profiles>
+	   <profile>
+	        <repositories>
+	            <repository>
+	                <snapshots>
+	                    <enabled>false</enabled>
+	                </snapshots>
+	                <id>central</id>
+	                <name>bintray</name>
+	                <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-rc</url>
+	            </repository>
+	        </repositories>
+	        <pluginRepositories>
+	            <pluginRepository>
+	                <snapshots>
+	                    <enabled>false</enabled>
+	                </snapshots>
+	                <id>central</id>
+	                <name>bintray-plugins</name>
+	                <url>https://dl.bintray.com/eventuateio-oss/eventuate-maven-rc</url>
+	            </pluginRepository>
+	        </pluginRepositories>
+	        <id>bintray</id>
+	    </profile>	
+	</profiles>
 </project>
