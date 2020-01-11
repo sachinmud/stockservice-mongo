@@ -55,7 +55,7 @@ public class TradeServiceImpl implements TradeService {
 		boolean found = false;
 		for(StockItemModel si: stockItems) {
 			if(si.getCode().equalsIgnoreCase(order.getCode())) {
-				si.setBuyPrice((si.getBuyPrice().add(order.getPrice())).divide(new BigDecimal(si.getQuantity()+order.getQuantity())));
+				si.setBuyPrice(((si.getBuyPrice().multiply(new BigDecimal(si.getQuantity()))).add((order.getPrice().multiply(new BigDecimal(order.getQuantity()))))).divide(new BigDecimal(si.getQuantity()+order.getQuantity())));
 				si.setQuantity(si.getQuantity()+order.getQuantity());
 				found = true;
 				break;
