@@ -19,10 +19,10 @@ after_success:
   - docker build -t sachinmudigere/stocksapp-trade-service ./trade-service
   #push images to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
-  - docker push sachinmudigere/stocksapp-config-service
-  - docker push sachinmudigere/stocksapp-discovery-service
-  - docker push sachinmudigere/stocksapp-user-service
-  - docker push sachinmudigere/stocksapp-portfolio-service
-  - docker push sachinmudigere/stocksapp-trade-service
+  - docker push sachinmudigere/stocksapp-config-service:latest
+  - docker push sachinmudigere/stocksapp-discovery-service:latest
+  - docker push sachinmudigere/stocksapp-user-service:latest
+  - docker push sachinmudigere/stocksapp-portfolio-service:latest
+  - docker push sachinmudigere/stocksapp-trade-service:latest
 
 
