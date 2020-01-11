@@ -1,35 +1,39 @@
 package com.sachin.tradeservice.service.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sachin.commons.util.EntityUtils;
+import com.sachin.portfolioservice.model.StockItemModel;
+import com.sachin.portfolioservice.model.UserPortfolioModel;
 import com.sachin.tradeservice.domain.StockOrder;
 import com.sachin.tradeservice.model.StockOrderModel;
 import com.sachin.tradeservice.repository.StockTradeRepository;
 import com.sachin.tradeservice.service.TradeService;
-import com.sachin.tradeservice.service.sagas.BuyStockSagaData;
-import com.sachin.tradeservice.service.sagas.BuyStockSagaState;
-
-import io.eventuate.tram.sagas.orchestration.SagaManager;
 
 @Service
 public class TradeServiceImpl implements TradeService {
 	
 	@Autowired
-	private SagaManager<BuyStockSagaState> buyStockSagaManager;
+	StockTradeRepository repository;
 	
 	@Autowired
-	StockTradeRepository repository;
+	PortfolioServiceProxy portfolioClient;
 	
 	public StockOrderModel buyStock(StockOrderModel orderVO) {
 		
 		StockOrder order = new EntityUtils<StockOrderModel, StockOrder>().copyProperties(orderVO, new StockOrder());
 		order.setAction('B');
 		order = repository.save(order);
+		UserPortfolioModel portfolio =  portfolioClient.getPortfolio(String.valueOf(orderVO.getUserId()));
+		
+		portfolio = modifyPortfolioForBuy(portfolio, order);
+		portfolio = portfolioClient.savePortfolio(portfolio);
 		orderVO = new EntityUtils<StockOrder, StockOrderModel>().copyProperties(order, orderVO);
-		BuyStockSagaState data = new BuyStockSagaState(orderVO);
-	    buyStockSagaManager.create(data);
 	    return new EntityUtils<StockOrder, StockOrderModel>().copyProperties(repository.findById(order.getId()).get(), new StockOrderModel());		
 	}
 	
@@ -40,10 +44,37 @@ public class TradeServiceImpl implements TradeService {
 		return new EntityUtils<StockOrder, StockOrderModel>().copyProperties(repository.save(order), new StockOrderModel());
 		
 	}
-	
+
 	public boolean deleteOrder(long orderId) {
 		repository.deleteById(orderId);
 		return true;
+	}
+	
+	private UserPortfolioModel modifyPortfolioForBuy(UserPortfolioModel portfolio, StockOrder order) {
+		List<StockItemModel> stockItems = portfolio.getStockPortfolio().getStockItems();
+		boolean found = false;
+		for(StockItemModel si: stockItems) {
+			if(si.getCode().equalsIgnoreCase(order.getCode())) {
+				si.setBuyPrice((si.getBuyPrice().add(order.getPrice())).divide(new BigDecimal(si.getQuantity()+order.getQuantity())));
+				si.setQuantity(si.getQuantity()+order.getQuantity());
+				found = true;
+				break;
+			}
+		}
+		if(!found) {
+			StockItemModel si = new StockItemModel();
+			si.setCode(order.getCode());
+			si.setBuyPrice(order.getPrice());
+			si.setQuantity(order.getQuantity());
+			if(stockItems == null) {
+				stockItems = new ArrayList<StockItemModel>();
+			}
+			stockItems.add(si);
+		}
+		portfolio.getStockPortfolio().setStockItems(stockItems);
+		
+		return portfolio;
+		
 	}
 
 }

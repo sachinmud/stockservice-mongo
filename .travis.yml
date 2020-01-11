@@ -5,15 +5,23 @@ services:
   - docker
 script: 
   - mvn clean install -DskipTests -f ./config-service/pom.xml
-  - docker build -t stockservice/config-service ./config-service
+  - mvn clean install -DskipTests -f ./discovery-service/pom.xml
+  - mvn clean install -DskipTests -f ./user-service/pom.xml
+  - mvn clean install -DskipTests -f ./portfolio-service/pom.xml
+  - mvn clean install -DskipTests -f ./trade-service/pom.xml
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "config-service"
-  env: "ConfigService-env"
-  bucket_name: "elasticbeanstalk-us-east-2-711023461794"
-  bucket_path: "config-service"
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+after_success: 
+  - docker build -t sachinmudigere/stocksapp-config-service ./config-service
+  - docker build -t sachinmudigere/stocksapp-discovery-service ./discovery-service
+  - docker build -t sachinmudigere/stocksapp-user-service ./user-service
+  - docker build -t sachinmudigere/stocksapp-portfolio-service ./portfolio-service
+  - docker build -t sachinmudigere/stocksapp-trade-service ./trade-service
+  #push images to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+  - docker push sachinmudigere/stocksapp-config-service
+  - docker push sachinmudigere/stocksapp-discovery-service
+  - docker push sachinmudigere/stocksapp-user-service
+  - docker push sachinmudigere/stocksapp-portfolio-service
+  - docker push sachinmudigere/stocksapp-trade-service
+
 

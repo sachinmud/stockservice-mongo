@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PortfolioServiceConfiguration {
-
+	
 	@Value("${signature}")
 	private String signature;
 
