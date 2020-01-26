@@ -13,33 +13,6 @@
                      "containerPort": 8888
 		  }
 	    ]
-	}, 
-    {
-	   "name": "discovery-service",
-	   "image": "sachinmudigere/stocksapp-discovery-service",
-	   "hostname": "discovery-service",
-	   "essential": "false",
-           "memory": 512,
-	   "portMapping": [
-	      {
-		     "hostPort": 8761,
-	             "containerPort": 8761
-		  }
-	    ]
-	}, 
-    {
-	   "name": "user-service",
-	   "image": "sachinmudigere/stocksapp-user-service",
-	   "hostname": "user-service",
-	   "essential": "false",
-           "memory": 512,
-	   "portMapping": [
-	      {
-		     "hostPort": 8085,
-	             "containerPort": 8085
-		  }
-	    ], 
-		"links": ["config-service", "discovery-service"]
 	}
   ]
 }
