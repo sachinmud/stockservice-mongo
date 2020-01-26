@@ -30,4 +30,14 @@ after_success:
   - docker push sachinmudigere/stocksapp-portfolio-service
   - docker push sachinmudigere/stocksapp-trade-service
 
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "stockservice"
+  env: "Stockservice-env"
+  bucket_name: "elasticbeanstalk-us-east-2-711023461794"
+  bucket_path: "stockservice"
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
 
