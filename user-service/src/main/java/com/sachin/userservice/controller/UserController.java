@@ -3,6 +3,7 @@ package com.sachin.userservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,29 +31,34 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	public List<UserModel> getUsers() {
 		
 		return service.getAllUsers();
 	}
 	
 	@RequestMapping(value = "/{id}/roles", method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	public List<RoleModel> getRoles(@PathVariable("id") String id) {
 		return service.getRolesForUser(Long.parseLong(id));
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@PreAuthorize("hasAuthority('user:modify')")
 	public UserModel save(@RequestBody UserModel user) {
 		
 		return service.saveUser(user);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasAuthority('user:modify')")
 	public UserModel updateUser(@PathVariable("id") String id, @RequestBody UserModel user) {
 		
 		return service.saveUser(user);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAuthority('user:delete')")
 	public boolean deleteUser(@PathVariable("id") String id) {
 		return service.deleteUser(Long.parseLong(id));
 	}	
