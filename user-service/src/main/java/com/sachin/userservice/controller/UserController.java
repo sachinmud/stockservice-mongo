@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,20 +27,30 @@ public class UserController {
 	UserService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('user:read')")
 	public UserModel getUser(@PathVariable("id") String id) {
 		
 		return service.getUser(Long.parseLong(id));
 	}
 
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('user:read')")
+	public UserDetails getUserByUserName(@PathVariable("name") String name) {
+		
+		return service.loadUserByUsername(name);
+	}
+
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+//	@PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
+	@PreAuthorize("hasAuthority('user:read')")
 	public List<UserModel> getUsers() {
 		
 		return service.getAllUsers();
 	}
 	
 	@RequestMapping(value = "/{id}/roles", method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+	@PreAuthorize("hasAuthority('role:read')")
 	public List<RoleModel> getRoles(@PathVariable("id") String id) {
 		return service.getRolesForUser(Long.parseLong(id));
 	}
@@ -47,6 +59,12 @@ public class UserController {
 	@PreAuthorize("hasAuthority('user:modify')")
 	public UserModel save(@RequestBody UserModel user) {
 		
+		return service.saveUser(user);
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.PUT)
+	@PreAuthorize("hasAuthority('user:modify')")
+	public UserModel update(@RequestBody UserModel user) {
 		return service.saveUser(user);
 	}
 

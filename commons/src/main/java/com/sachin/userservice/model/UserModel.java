@@ -1,8 +1,13 @@
 package com.sachin.userservice.model;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
-public class UserModel {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class UserModel implements UserDetails{
 
 	private long id;
 	
@@ -13,6 +18,10 @@ public class UserModel {
 	private String password;
 	
 	private Set<RoleModel> roles;
+	
+	private boolean enabled;
+	
+	private Set<PermissionModel> authorities;
 
 	public long getId() {
 		return id;
@@ -52,6 +61,38 @@ public class UserModel {
 
 	public void setRoles(Set<RoleModel> roles) {
 		this.roles = roles;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAuthorities(Set<PermissionModel> authorities) {
+		this.authorities = authorities;
+	}
+
+	public Set<PermissionModel> getAuthorities() {
+		return authorities;
+	}
+
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled;
 	}
 	
 	

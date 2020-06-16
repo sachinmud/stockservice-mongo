@@ -1,9 +1,7 @@
 package com.sachin.userservice.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -11,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -29,6 +29,18 @@ public class Role {
 	@Column(name = "ROLENAME")
 	private String rolename;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "ROLEPERMISSIONS", joinColumns = { @JoinColumn(name = "ROLEID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSIONID")})
+	private Set<Permission> permissions;
+	
+	public Set<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
 	public long getId() {
 		return id;
 	}

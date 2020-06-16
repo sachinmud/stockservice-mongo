@@ -11,7 +11,7 @@ import static com.sachin.userservice.security.ApplicationUserPermission.*;
 public enum ApplicationUserRole {
 	
 	ADMIN(Sets.newHashSet(USER_READ, USER_MODIFY, USER_DELETE
-			,ROLE_READ, ROLE_MODIFY, ROLE_DELETE)),
+			,ROLE_READ, ROLE_MODIFY, ROLE_DELETE, PERMISSION_MODIFY, PERMISSION_DELETE)),
 	CLIENT(Sets.newHashSet(USER_READ, ROLE_READ));
 	
 	private final Set<ApplicationUserPermission> permissions;

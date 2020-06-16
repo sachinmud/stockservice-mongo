@@ -1,7 +1,6 @@
 package com.sachin.userservice.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,46 +10,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sachin.userservice.model.RoleModel;
-import com.sachin.userservice.service.RoleService;
+import com.sachin.userservice.model.PermissionModel;
+import com.sachin.userservice.service.PermissionService;
 
 @RestController
-@RequestMapping(value = "v1/role")
-public class RoleController {
-
+@RequestMapping(value = "v1/permission")
+public class PermissionController {
+	
 	@Autowired
-	RoleService service;
+	PermissionService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PreAuthorize("hasAuthority('role:read')")
-	public RoleModel getRole(@PathVariable("id") String roleId) {
-		return service.getRole(Long.parseLong(roleId));
+	public PermissionModel getPermission(@PathVariable("id") String permissionId) {
+		return service.getPermission(Long.parseLong(permissionId));
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PreAuthorize("hasAuthority('role:read')")
-	public Set<RoleModel> getAllRoles() {
-		return service.getAllRoles();
+	public List<PermissionModel> getAllPermissions() {
+		return service.getAllPermissions();
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	@PreAuthorize("hasAuthority('role:modify')")
-	public RoleModel saveRole(@RequestBody RoleModel role) {
-		return service.saveRole(role);
+	@PreAuthorize("hasAuthority('permission:modify')")
+	public PermissionModel savePermission(@RequestBody PermissionModel permission) {
+		return service.savePermission(permission);
 	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('role:modify')")
-	public RoleModel updateRole(@RequestBody RoleModel role) {
-		return service.saveRole(role);
-	}
-		
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('role:delete')")
-	public boolean deleteRole(@PathVariable("id") String roleId) {
-		return service.deleteRole(Long.parseLong(roleId));
-	}
+	@PreAuthorize("hasAuthority('permission:delete')")
+	public boolean deletePermission(@PathVariable("id") String permissionId) {
+		return service.deletePermission(Long.parseLong(permissionId));
+	}	
+
 }

@@ -17,5 +17,7 @@
         <module>user-service</module>
         <module>portfolio-service</module>
         <module>trade-service</module>
+        <module>trade-service</module>
+        <module>stockservice-web</module>
     </modules>
 </project>

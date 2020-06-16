@@ -1,5 +1,7 @@
 package com.sachin.userservice.domain;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,11 +18,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USER")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +40,13 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@Column(name = "ENABLED")
+	private boolean enabled;
+
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "USERROLES", joinColumns = { @JoinColumn(name = "USERID") }, inverseJoinColumns = { @JoinColumn(name = "ROLEID")})
 	private Set<Role> roles;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -80,5 +87,42 @@ public class User {
 		this.roles = roles;
 	}
 
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		Set<GrantedAuthority> permissions = new HashSet<>();
+		// TODO Auto-generated method stub
+		getRoles().forEach(role -> {
+			try {
+				permissions.addAll(role.getPermissions());
+			} catch(Exception e) {}
+			});
+		
+		return permissions;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled;
+	}
+
 }

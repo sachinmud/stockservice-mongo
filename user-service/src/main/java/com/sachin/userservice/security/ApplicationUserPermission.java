@@ -7,7 +7,9 @@ public enum ApplicationUserPermission {
 	USER_DELETE("user:delete"),
 	ROLE_READ("role:read"),
 	ROLE_MODIFY("role:modify"),
-	ROLE_DELETE("role:delete");
+	ROLE_DELETE("role:delete"),
+	PERMISSION_MODIFY("permission:modify"),
+	PERMISSION_DELETE("permission:delete");
 
 	private final String permission;
 

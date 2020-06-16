@@ -9,6 +9,16 @@ public class RoleModel {
 	
 	private String rolename;
 	
+	private Set<PermissionModel> permissions;
+	
+	public void setPermissions(Set<PermissionModel> permissions) {
+		this.permissions = permissions;
+	}
+
+	public Set<PermissionModel> getPermissions() {
+		return permissions;
+	}
+	
 	public long getId() {
 		return id;
 	}
