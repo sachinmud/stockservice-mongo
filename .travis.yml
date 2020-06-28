@@ -10,6 +10,7 @@ script:
   - mvn clean install -DskipTests -f ./user-service/pom.xml
   - mvn clean install -DskipTests -f ./portfolio-service/pom.xml
   - mvn clean install -DskipTests -f ./trade-service/pom.xml
+  - mvn clean install -DskipTests -f ./stockservice-web/pom.xml
 
 after_success: 
   - docker build -t sachinmudigere/stocksapp-config-service ./config-service
@@ -22,6 +23,8 @@ after_success:
   - docker tag sachinmudigere/stocksapp-portfolio-service:latest sachinmudigere/stocksapp-portfolio-service
   - docker build -t sachinmudigere/stocksapp-trade-service ./trade-service
   - docker tag sachinmudigere/stocksapp-trade-service:latest sachinmudigere/stocksapp-trade-service
+  - docker build -t sachinmudigere/stocksapp-stockui-service ./stockui-service
+  - docker tag sachinmudigere/stocksapp-stockui-service:latest sachinmudigere/stocksapp-stockui-service
   #push images to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push sachinmudigere/stocksapp-config-service
@@ -29,15 +32,16 @@ after_success:
   - docker push sachinmudigere/stocksapp-user-service
   - docker push sachinmudigere/stocksapp-portfolio-service
   - docker push sachinmudigere/stocksapp-trade-service
+  - docker push sachinmudigere/stocksapp-stockui-service
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "stockservice"
-  env: "Stockservice-env"
-  bucket_name: "elasticbeanstalk-us-east-2-711023461794"
-  bucket_path: "stockservice"
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-2"
+#  app: "stockservice"
+#  env: "Stockservice-env"
+#  bucket_name: "elasticbeanstalk-us-east-2-711023461794"
+#  bucket_path: "stockservice"
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
 
 

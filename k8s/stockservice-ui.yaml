@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockserviceui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: stockserviceui
+  template:
+    metadata:
+      labels:
+        component: stockserviceui
+    spec:
+      containers:
+        - name: stockserviceui
+          image: sachinmudigere/stocksapp-stockui-service
+          ports:
+            - containerPort: 8080

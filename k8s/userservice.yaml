@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: userservice
+  template:
+    metadata:
+      labels:
+        component: userservice
+    spec:
+      containers:
+        - name: userservice
+          image: sachinmudigere/stocksapp-user-service
+          ports:
+            - containerPort: 8085

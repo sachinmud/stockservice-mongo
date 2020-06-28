@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discoveryservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: discoveryservice
+  template:
+    metadata:
+      labels:
+        component: discoveryservice
+    spec:
+      containers:
+        - name: discoveryservice
+          image: sachinmudigere/stocksapp-discovery-service
+          ports:
+            - containerPort: 8761

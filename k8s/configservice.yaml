@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: configservice
+  template:
+    metadata:
+      labels:
+        component: configservice
+    spec:
+      containers:
+        - name: configservice
+          image: sachinmudigere/stocksapp-config-service
+          ports:
+            - containerPort: 8888

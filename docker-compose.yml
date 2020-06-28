@@ -61,6 +61,16 @@ services:
       - discovery-service
       - user-service
       - portfolio-service
+  stockui-service: 
+    build: ./stockui-service
+    ports: 
+      - "8080:8080"
+    environment:
+    depends_on:
+      - config-service
+      - discovery-service
+      - user-service
+
 
 
 
