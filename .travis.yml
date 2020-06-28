@@ -8,8 +8,8 @@ script:
   - mvn clean install -DskipTests -f ./config-service/pom.xml
   - mvn clean install -DskipTests -f ./discovery-service/pom.xml
   - mvn clean install -DskipTests -f ./user-service/pom.xml
-  - mvn clean install -DskipTests -f ./portfolio-service/pom.xml
-  - mvn clean install -DskipTests -f ./trade-service/pom.xml
+#  - mvn clean install -DskipTests -f ./portfolio-service/pom.xml
+#  - mvn clean install -DskipTests -f ./trade-service/pom.xml
   - mvn clean install -DskipTests -f ./stockservice-web/pom.xml
 
 after_success: 
@@ -19,10 +19,10 @@ after_success:
   - docker tag sachinmudigere/stocksapp-discovery-service:latest sachinmudigere/stocksapp-discovery-service
   - docker build -t sachinmudigere/stocksapp-user-service ./user-service
   - docker tag sachinmudigere/stocksapp-user-service:latest sachinmudigere/stocksapp-user-service
-  - docker build -t sachinmudigere/stocksapp-portfolio-service ./portfolio-service
-  - docker tag sachinmudigere/stocksapp-portfolio-service:latest sachinmudigere/stocksapp-portfolio-service
-  - docker build -t sachinmudigere/stocksapp-trade-service ./trade-service
-  - docker tag sachinmudigere/stocksapp-trade-service:latest sachinmudigere/stocksapp-trade-service
+#  - docker build -t sachinmudigere/stocksapp-portfolio-service ./portfolio-service
+#  - docker tag sachinmudigere/stocksapp-portfolio-service:latest sachinmudigere/stocksapp-portfolio-service
+#  - docker build -t sachinmudigere/stocksapp-trade-service ./trade-service
+#  - docker tag sachinmudigere/stocksapp-trade-service:latest sachinmudigere/stocksapp-trade-service
   - docker build -t sachinmudigere/stocksapp-stockui-service ./stockui-service
   - docker tag sachinmudigere/stocksapp-stockui-service:latest sachinmudigere/stocksapp-stockui-service
   #push images to docker hub
@@ -30,8 +30,8 @@ after_success:
   - docker push sachinmudigere/stocksapp-config-service
   - docker push sachinmudigere/stocksapp-discovery-service
   - docker push sachinmudigere/stocksapp-user-service
-  - docker push sachinmudigere/stocksapp-portfolio-service
-  - docker push sachinmudigere/stocksapp-trade-service
+#  - docker push sachinmudigere/stocksapp-portfolio-service
+#  - docker push sachinmudigere/stocksapp-trade-service
   - docker push sachinmudigere/stocksapp-stockui-service
 
 #deploy:
