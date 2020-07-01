@@ -26,7 +26,7 @@ public class UserController {
 		List<UserModel> users = service.getAllUsers();
 		ModelAndView model = new ModelAndView();
 		model.addObject("users", users);
-		model.setViewName("/user/search");
+		model.setViewName("user/search");
 		return model;
 	}	
 
