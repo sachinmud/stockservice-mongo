@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	public List<UserModel> getAllUsers() {
 		
 		RestTemplate restTemplate = restTemplateBuilder.basicAuthentication(restUserName, restPassword).build();    
-		ResponseEntity<List> users = restTemplate.getForEntity(config.getUserServiceUrl() +"/v1/user/all", List.class);
+		ResponseEntity<List> users = restTemplate.getForEntity(userServiceUrl +"/v1/user/all", List.class);
 		
 		return users.getBody();
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 	
 	public UserModel getUser(Long userId) {
 		RestTemplate restTemplate = restTemplateBuilder.basicAuthentication(restUserName, restPassword).build();    
-		ResponseEntity<UserModel> user = restTemplate.getForEntity(config.getUserServiceUrl() +"/v1/user/{userId}", UserModel.class, userId);
+		ResponseEntity<UserModel> user = restTemplate.getForEntity(userServiceUrl +"/v1/user/{userId}", UserModel.class, userId);
 		
 		return user.getBody();
 		

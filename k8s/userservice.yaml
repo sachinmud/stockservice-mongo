@@ -19,13 +19,15 @@ spec:
             - containerPort: 8085
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-service:3306/userservicedb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+              value: jdbc:mysql://mysql-service:3306/userservicedb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
             - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
               value: com.mysql.cj.jdbc.Driver
             - name: SPRING_PROFILES_ACTIVE
               value: dev
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
