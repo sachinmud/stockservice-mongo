@@ -13,8 +13,7 @@ spec:
         component: stockserviceui
     spec:
       containers:
-      - image: sachinmudigere/stocksapp-stockui-service
-        name: stockserviceui
-        ports:
-        - containerPort: 8080
-        
+        - name: stockserviceui
+          image: sachinmudigere/stocksapp-stockui-service
+          ports:
+            - containerPort: 8080

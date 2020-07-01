@@ -13,6 +13,8 @@ script:
   - mvn clean install -DskipTests -f ./stockservice-web/pom.xml
 
 after_success: 
+  - docker build -t sachinmudigere/stocksapp-mysql-service ./mysql
+  - docker tag sachinmudigere/stocksapp-mysql-service:latest sachinmudigere/stocksapp-mysql-service
   - docker build -t sachinmudigere/stocksapp-config-service ./config-service
   - docker tag sachinmudigere/stocksapp-config-service:latest sachinmudigere/stocksapp-config-service
   - docker build -t sachinmudigere/stocksapp-discovery-service ./discovery-service
@@ -27,6 +29,7 @@ after_success:
   - docker tag sachinmudigere/stocksapp-stockui-service:latest sachinmudigere/stocksapp-stockui-service
   #push images to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push sachinmudigere/stocksapp-mysql-service
   - docker push sachinmudigere/stocksapp-config-service
   - docker push sachinmudigere/stocksapp-discovery-service
   - docker push sachinmudigere/stocksapp-user-service
