@@ -32,4 +32,10 @@ public class TradeController {
 		return new ResponseEntity<StockOrderModel>(service.sellStock(order), HttpStatus.ACCEPTED);
 	}	
 
+	@PostMapping(value = "/buystockasync")
+	public ResponseEntity<StockOrderModel> buyStockAsync(@RequestBody StockOrderModel order) {
+		return new ResponseEntity<StockOrderModel>(service.buyStock(order), HttpStatus.ACCEPTED);
+	}
+	
+	
 }

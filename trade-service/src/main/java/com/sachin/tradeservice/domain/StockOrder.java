@@ -22,6 +22,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.sachin.tradeservice.sm.constants.TradeStatusEnum;
+
 @Entity
 @Table(name = "STOCKORDER")
 @EntityListeners(AuditingEntityListener.class)
@@ -33,7 +35,10 @@ public class StockOrder {
 	private long id;
 	
 	@Column(name = "CODE")
-	private String code;	
+	private String code;
+	
+	@Column(name = "NAME")
+	private String name;
 	
 	@Column(name = "ORDERDATE")
 	private Date orderDate;
@@ -50,6 +55,9 @@ public class StockOrder {
 	@Column(name = "USERID")
     private Long userId;
 	
+	@Column(name = "STATUS")
+	private TradeStatusEnum status;	
+
 	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -74,6 +82,14 @@ public class StockOrder {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getOrderDate() {
@@ -114,6 +130,14 @@ public class StockOrder {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public TradeStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(TradeStatusEnum status) {
+		this.status = status;
 	}
 
 	public Date getCreatedDate() {
