@@ -30,10 +30,10 @@ public class TradeServiceApplication {
          .apis(RequestHandlerSelectors.basePackage("com.sachin.tradeservice.controller")).paths(PathSelectors.regex("/.*")).build();
     }	
 	
-	@LoadBalanced
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
+	/*
+	 * @LoadBalanced
+	 * 
+	 * @Bean public RestTemplate getRestTemplate() { return new RestTemplate(); }
+	 */
 	
 }

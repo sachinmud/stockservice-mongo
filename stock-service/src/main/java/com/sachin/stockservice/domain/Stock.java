@@ -6,6 +6,7 @@ import java.util.Date;
 public class Stock {
 	
 	private String code;
+	private String name;
 	private Date valueDate;
 	private BigDecimal open;
 	private BigDecimal high;
@@ -62,7 +63,11 @@ public class Stock {
 	public void setVolume(long volume) {
 		this.volume = volume;
 	}
-	
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

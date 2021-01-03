@@ -3,10 +3,18 @@ package com.sachin.portfolioservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sachin.portfolioservice.model.UserPortfolioModel;
@@ -23,39 +31,47 @@ public class PortfolioController {
 	@Autowired
 	PortfolioService portfolioService;
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public UserPortfolioModel getPortfolio(@PathVariable("id") String id) {
-		return portfolioService.getPortfolio(id);
+	@PreAuthorize("hasAuthority('portfolio:read')")
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<UserPortfolioModel> getPortfolio(@PathVariable("id") String id) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.getPortfolio(id), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public UserPortfolioModel getPortfolioByUser(@PathVariable("id") String id) {
-		return portfolioService.getPortfoliobyUser(id);
+	@PreAuthorize("hasAuthority('portfolio:read')")
+	@GetMapping(value = "/user/{id}")
+	public ResponseEntity<UserPortfolioModel> getPortfolioByUser(@PathVariable("id") String id) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.getPortfoliobyUser(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}/details", method = RequestMethod.GET)
-	public UserPortfolioModel getPortfolioDetails(@PathVariable("id") String id) {
-		return portfolioService.getPortfolioDetails(id);
+	@PreAuthorize("hasAuthority('portfolio:read')")
+	@GetMapping(value = "/{id}/details")
+	public ResponseEntity<UserPortfolioModel> getPortfolioDetails(@PathVariable("id") String id) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.getPortfolioDetails(id), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/user/{id}/details", method = RequestMethod.GET)
-	public UserPortfolioModel getPortfolioDetailsByUser(@PathVariable("id") String id) {
-		return portfolioService.getPortfolioDetailsbyUser(id);
+	@PreAuthorize("hasAuthority('portfolio:read')")
+	@GetMapping(value = "/user/{id}/details")
+	public ResponseEntity<UserPortfolioModel> getPortfolioDetailsByUser(@PathVariable("id") String id) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.getPortfolioDetailsbyUser(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public UserPortfolioModel savePortfolio(@RequestBody UserPortfolioModel portfolioVO) {
-		return portfolioService.savePortfolio(portfolioVO);
+	@PreAuthorize("hasAuthority('portfolio:write')")
+	@PostMapping(value = "/")
+	public ResponseEntity<UserPortfolioModel> savePortfolio(@RequestBody UserPortfolioModel portfolioVO) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.savePortfolio(portfolioVO), HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public UserPortfolioModel savePortfolio(@PathVariable("id") String id, @RequestBody UserPortfolioModel portfolioVO) {
-		return portfolioService.savePortfolio(portfolioVO);
+	@PreAuthorize("hasAuthority('portfolio:write')")
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<UserPortfolioModel> savePortfolio(@PathVariable("id") String id, @RequestBody UserPortfolioModel portfolioVO) {
+		return new ResponseEntity<UserPortfolioModel>(portfolioService.savePortfolio(portfolioVO), HttpStatus.NO_CONTENT);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean deletePortfolio(@PathVariable("id") String id) {
-		return portfolioService.deletePortfolio(id);
+	@PreAuthorize("hasAuthority('portfolio:write')")
+	@DeleteMapping(value = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deletePortfolio(@PathVariable("id") String id) {
+		portfolioService.deletePortfolio(id);
 	}
 	
 }

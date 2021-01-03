@@ -6,6 +6,7 @@ import java.util.Date;
 public class StockModel {
 	
 	private String code;
+	private String name;
 	private Date valueDate;
 	private BigDecimal open;
 	private BigDecimal high;
@@ -65,6 +66,15 @@ public class StockModel {
 	}
 	public BigDecimal getPrice() {
 		return adjClose;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 	
 }

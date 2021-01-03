@@ -3,6 +3,11 @@ package com.sachin.userservice.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 public class RoleModel {
 	
 	private long id;

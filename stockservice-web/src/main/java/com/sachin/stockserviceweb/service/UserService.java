@@ -16,6 +16,12 @@ public interface UserService extends UserDetailsService
 	
 	public UserModel getUser(Long userId);
 	
+	public UserModel saveUser(UserModel userModel);
+	
+	public void updateUser(String id, UserModel userModel);
+	
+	public void deleteUser(String id);
+	
 	UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException;
 

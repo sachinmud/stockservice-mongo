@@ -1,6 +1,9 @@
 package com.sachin.tradeservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,14 +22,14 @@ public class TradeController {
 	@Autowired
 	TradeService service;
 	
-	@RequestMapping(value = "/buystock")
-	public StockOrderModel buyStock(@RequestBody StockOrderModel order) {
-		return service.buyStock(order);
+	@PostMapping(value = "/buystock")
+	public ResponseEntity<StockOrderModel> buyStock(@RequestBody StockOrderModel order) {
+		return new ResponseEntity<StockOrderModel>(service.buyStock(order), HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(value = "/sellstock")
-	public StockOrderModel sellStock(@RequestBody StockOrderModel order) {
-		return service.sellStock(order);
+	@PostMapping(value = "/sellstock")
+	public ResponseEntity<StockOrderModel> sellStock(@RequestBody StockOrderModel order) {
+		return new ResponseEntity<StockOrderModel>(service.sellStock(order), HttpStatus.ACCEPTED);
 	}	
 
 }

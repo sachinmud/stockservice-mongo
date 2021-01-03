@@ -3,6 +3,11 @@ package com.sachin.tradeservice.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 public class StockOrderModel {
 
 	private long orderId;

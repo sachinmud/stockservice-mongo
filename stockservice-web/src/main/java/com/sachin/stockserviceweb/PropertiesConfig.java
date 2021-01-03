@@ -15,4 +15,12 @@ public class PropertiesConfig {
 	public String getUserServiceUrl() {
 		return env.getProperty("user.service.url");
 	}
+
+	public String getPortfolioServiceUrl() {
+		return env.getProperty("portfolio.service.url");
+	}
+	
+	public String getStockServiceUrl() {
+		return env.getProperty("stock.service.url");
+	}
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
@@ -26,6 +27,7 @@ import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+@Component
 public class YahooAPIUtil {
 
 	HttpClient client = HttpClientBuilder.create().build();
@@ -97,8 +99,8 @@ public class YahooAPIUtil {
 
 	public File downloadData(String symbol, long startDate, long endDate, String crumb) {
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		String directoryName = String.format("/home/iid/stockdata/%s/%s", symbol, df.format(new Date()));
-		String filename = String.format("/home/iid/stockdata/%s/%s/%s.csv", symbol, df.format(new Date()), symbol);
+		String directoryName = String.format("E:/Sachin/Data/stockdata/%s/%s", symbol, df.format(new Date()));
+		String filename = String.format("E:/Sachin/Data/stockdata/%s/%s/%s.csv", symbol, df.format(new Date()), symbol);
 		File directory = new File(directoryName);
 		directory.mkdirs();
 		File file = new File(filename);

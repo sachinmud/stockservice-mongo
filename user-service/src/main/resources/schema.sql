@@ -40,6 +40,10 @@ insert into permission(permissionid, permission) values (5, 'role:modify');
 insert into permission(permissionid, permission) values (6, 'role:delete');
 insert into permission(permissionid, permission) values (7, 'permission:modify');
 insert into permission(permissionid, permission) values (8, 'permission:delete');
+insert into permission(permissionid, permission) values (9, 'stock:read');
+insert into permission(permissionid, permission) values (10, 'portfolio:read');
+insert into permission(permissionid, permission) values (11, 'portfolio:write');
+insert into permission(permissionid, permission) values (12, 'trade:write');
 
 insert into role(roleid, rolename) values(1, 'ROLE_ADMIN');
 insert into role(roleid, rolename) values(2, 'ROLE_CLIENT');
@@ -52,6 +56,10 @@ insert into rolepermissions(permissionid, roleid) values (5, 1);
 insert into rolepermissions(permissionid, roleid) values (6, 1);
 insert into rolepermissions(permissionid, roleid) values (7, 1);
 insert into rolepermissions(permissionid, roleid) values (8, 1);
+insert into rolepermissions(permissionid, roleid) values (9, 1);
+insert into rolepermissions(permissionid, roleid) values (10, 1);
+insert into rolepermissions(permissionid, roleid) values (11, 1);
+insert into rolepermissions(permissionid, roleid) values (12, 1);
 insert into rolepermissions(permissionid, roleid) values (1, 2);
 insert into rolepermissions(permissionid, roleid) values (4, 2);
 

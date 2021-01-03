@@ -17,11 +17,11 @@ import com.sachin.stockservice.domain.Stock;
 import com.sachin.stockservice.repository.StockRepository;
 import com.sachin.stockservice.util.YahooAPIUtil;
 
-@Repository
-public class StockNoSQLRepositoryImpl implements StockRepository {
+@Repository("yahooapi")
+public class YahooAPIRepositoryImpl implements StockRepository {
 	
-	Logger logger = Logger.getLogger(StockNoSQLRepositoryImpl.class);
-
+	Logger logger = Logger.getLogger(YahooAPIRepositoryImpl.class);
+	
 	@Override
 	public Stock selectStock(String code) throws Exception {
 
