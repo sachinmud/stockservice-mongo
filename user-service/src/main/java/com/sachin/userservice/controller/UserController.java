@@ -30,7 +30,7 @@ public class UserController {
 	@PreAuthorize("hasAuthority('user:read')")
 	public UserModel getUser(@PathVariable("id") String id) {
 		
-		return service.getUser(Long.parseLong(id));
+		return service.getUser(id);
 	}
 
 	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
@@ -52,7 +52,7 @@ public class UserController {
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PreAuthorize("hasAuthority('role:read')")
 	public List<RoleModel> getRoles(@PathVariable("id") String id) {
-		return service.getRolesForUser(Long.parseLong(id));
+		return service.getRolesForUser(id);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -78,6 +78,6 @@ public class UserController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasAuthority('user:delete')")
 	public boolean deleteUser(@PathVariable("id") String id) {
-		return service.deleteUser(Long.parseLong(id));
+		return service.deleteUser(id);
 	}	
 }

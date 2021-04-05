@@ -24,7 +24,7 @@ public class PermissionController {
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PreAuthorize("hasAuthority('role:read')")
 	public PermissionModel getPermission(@PathVariable("id") String permissionId) {
-		return service.getPermission(Long.parseLong(permissionId));
+		return service.getPermission(permissionId);
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -43,7 +43,7 @@ public class PermissionController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasAuthority('permission:delete')")
 	public boolean deletePermission(@PathVariable("id") String permissionId) {
-		return service.deletePermission(Long.parseLong(permissionId));
+		return service.deletePermission(permissionId);
 	}	
 
 }

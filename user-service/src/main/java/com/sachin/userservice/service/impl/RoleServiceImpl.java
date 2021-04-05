@@ -28,8 +28,8 @@ public class RoleServiceImpl implements RoleService {
 	PermissionService permissionService;
 
 	@Override
-	public RoleModel getRole(Long roleId) {
-		return new EntityUtils<Role, RoleModel>().copyProperties(repository.getOne(roleId), new RoleModel());
+	public RoleModel getRole(String roleId) {
+		return new EntityUtils<Role, RoleModel>().copyProperties(repository.findById(roleId).get(), new RoleModel());
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public boolean deleteRole(Long roleId) {
+	public boolean deleteRole(String roleId) {
 		repository.deleteById(roleId);
 		return true;
 	}

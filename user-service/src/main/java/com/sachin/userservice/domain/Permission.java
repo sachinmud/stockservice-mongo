@@ -1,37 +1,26 @@
 package com.sachin.userservice.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;;
 
-@Entity
-@Table(name = "PERMISSION")
-@EntityListeners(AuditingEntityListener.class)
+@Document
 public class Permission implements GrantedAuthority {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PERMISSIONID")
-	private long id;
+	private String id;
 	
-	@Column(name = "PERMISSION")
 	private String authority;
 	
 	public Permission() {
 	}	
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

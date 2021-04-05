@@ -7,12 +7,12 @@ import com.sachin.userservice.model.RoleModel;
 
 public interface RoleService {
 	
-	public RoleModel getRole(Long roleId);
+	public RoleModel getRole(String roleId);
 	
 	public Set<RoleModel> getAllRoles();
 	
 	public RoleModel saveRole(RoleModel role);
 	
-	public boolean deleteRole(Long roleId);
+	public boolean deleteRole(String roleId);
 
 }

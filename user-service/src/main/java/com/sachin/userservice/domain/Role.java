@@ -2,35 +2,19 @@ package com.sachin.userservice.domain;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-@Entity
-@Table(name = "ROLE")
-@EntityListeners(AuditingEntityListener.class)
+@Document
 public class Role {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ROLEID")
-	private long id;
+	private String id;
 	
-	@Column(name = "ROLENAME")
 	private String rolename;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "ROLEPERMISSIONS", joinColumns = { @JoinColumn(name = "ROLEID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSIONID")})
+
+	@DBRef
 	private Set<Permission> permissions;
 	
 	public Set<Permission> getPermissions() {
@@ -41,11 +25,11 @@ public class Role {
 		this.permissions = permissions;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

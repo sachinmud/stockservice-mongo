@@ -4,54 +4,34 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
-@Table(name = "USER")
-@EntityListeners(AuditingEntityListener.class)
+@Document
 public class User implements UserDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USERID")
-	private long id;
+	private String id;
 	
-	@Column(name = "USERNAME")
 	private String username;	
 	
-	@Column(name = "FULLNAME")
 	private String fullname;	
 	
-	@Column(name = "PASSWORD")
 	private String password;
 	
-	@Column(name = "ENABLED")
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "USERROLES", joinColumns = { @JoinColumn(name = "USERID") }, inverseJoinColumns = { @JoinColumn(name = "ROLEID")})
+	@DBRef
 	private Set<Role> roles;
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

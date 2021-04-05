@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
 		return userModels.collect(Collectors.toList());
 	}
 	
-	public UserModel getUser(Long userId) {
+	public UserModel getUser(String userId) {
 		
-		return populateUserModel(new UserModel(), repository.getOne(userId));
+		return populateUserModel(new UserModel(), repository.findById(userId).get());
 		
 	}
 	
-	public List<RoleModel> getRolesForUser(Long userId) {
-		return repository.getOne(userId).getRoles().stream().map(r -> new EntityUtils<Role, RoleModel>().copyProperties(r, new RoleModel())).collect(Collectors.toList());
+	public List<RoleModel> getRolesForUser(String userId) {
+		return repository.findById(userId).get().getRoles().stream().map(r -> new EntityUtils<Role, RoleModel>().copyProperties(r, new RoleModel())).collect(Collectors.toList());
 	}
 	
 	public UserModel saveUser(UserModel usermodel) {
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 	
 	}
 
-	public boolean deleteUser(Long userId) {		
+	public boolean deleteUser(String userId) {		
 		repository.deleteById(userId);
 		return true;
 	}

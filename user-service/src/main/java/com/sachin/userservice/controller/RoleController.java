@@ -25,7 +25,7 @@ public class RoleController {
 //	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PreAuthorize("hasAuthority('role:read')")
 	public RoleModel getRole(@PathVariable("id") String roleId) {
-		return service.getRole(Long.parseLong(roleId));
+		return service.getRole(roleId);
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -51,6 +51,6 @@ public class RoleController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasAuthority('role:delete')")
 	public boolean deleteRole(@PathVariable("id") String roleId) {
-		return service.deleteRole(Long.parseLong(roleId));
+		return service.deleteRole(roleId);
 	}
 }

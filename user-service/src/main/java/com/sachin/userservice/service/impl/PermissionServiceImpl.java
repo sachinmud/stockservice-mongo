@@ -19,9 +19,9 @@ public class PermissionServiceImpl implements PermissionService {
 	PermissionRepository repository;
 	
 	@Override
-	public PermissionModel getPermission(Long permissionId) {
+	public PermissionModel getPermission(String permissionId) {
 		
-		return new EntityUtils<Permission, PermissionModel>().copyProperties(repository.getOne(permissionId), new PermissionModel());
+		return new EntityUtils<Permission, PermissionModel>().copyProperties(repository.findById(permissionId).get(), new PermissionModel());
 	}
 	
 	public List<PermissionModel> getAllPermissions() {
@@ -32,7 +32,7 @@ public class PermissionServiceImpl implements PermissionService {
 		return new EntityUtils<Permission, PermissionModel>().copyProperties(repository.save(new EntityUtils<PermissionModel, Permission>().copyProperties(permission, new Permission())), permission);
 	}
 	
-	public boolean deletePermission(Long permissionId) {
+	public boolean deletePermission(String permissionId) {
 		repository.deleteById(permissionId);
 		return true;
 	}

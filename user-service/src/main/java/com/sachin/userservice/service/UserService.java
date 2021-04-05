@@ -16,11 +16,11 @@ public interface UserService extends UserDetailsService
 	
 	public List<UserModel> getAllUsers();
 	
-	public UserModel getUser(Long userId);
+	public UserModel getUser(String userId);
 	
-	public List<RoleModel> getRolesForUser(Long userId);
+	public List<RoleModel> getRolesForUser(String userId);
 	
-	public boolean deleteUser(Long userId);
+	public boolean deleteUser(String userId);
 	
 	UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException;
