@@ -14,5 +14,7 @@ public interface PermissionService {
 	public PermissionModel savePermission(PermissionModel permission);
 	
 	public boolean deletePermission(String permissionId);
+	
+	public boolean loadInitialData();
 
 }

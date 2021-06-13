@@ -33,6 +33,11 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public RoleModel getRoleByName(String roleName) {
+		return new EntityUtils<Role, RoleModel>().copyProperties(repository.findByRolename(roleName), new RoleModel());
+	}
+	
+	@Override
 	public Set<RoleModel> getAllRoles() {
 		Set<RoleModel> roles = new HashSet();
 		repository.findAll().forEach(r -> {
@@ -57,4 +62,7 @@ public class RoleServiceImpl implements RoleService {
 		return true;
 	}
 
+	public boolean loadInitialData() {
+		return true;
+	}
 }

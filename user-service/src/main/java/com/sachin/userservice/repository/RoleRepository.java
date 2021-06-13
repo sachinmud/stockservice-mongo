@@ -6,4 +6,5 @@ import com.sachin.userservice.domain.Role;
 
 public interface RoleRepository extends MongoRepository<Role, String>{
 
+	Role findByRolename(String rolename);
 }

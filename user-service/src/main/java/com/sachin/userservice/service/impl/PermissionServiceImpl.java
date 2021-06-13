@@ -37,4 +37,7 @@ public class PermissionServiceImpl implements PermissionService {
 		return true;
 	}
 	
+	public boolean loadInitialData() {
+		return true;
+	}
 }

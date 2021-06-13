@@ -9,10 +9,14 @@ public interface RoleService {
 	
 	public RoleModel getRole(String roleId);
 	
+	public RoleModel getRoleByName(String roleName);
+
 	public Set<RoleModel> getAllRoles();
 	
 	public RoleModel saveRole(RoleModel role);
 	
 	public boolean deleteRole(String roleId);
+	
+	public boolean loadInitialData();
 
 }

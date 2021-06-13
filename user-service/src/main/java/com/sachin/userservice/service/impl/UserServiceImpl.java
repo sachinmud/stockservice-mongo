@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserService {
 		
 		User user = new EntityUtils<UserModel, User>().copyProperties(usermodel, new User());
 		user.setPassword(passwordEncoder.encode(usermodel.getPassword()));
-		user.setRoles(usermodel.getRoles().stream().map(r -> new EntityUtils<RoleModel, Role>().copyProperties(r, new Role())).collect(Collectors.toSet()));		
+		user.setRoles(usermodel.getRoles().stream().map(r -> new EntityUtils<RoleModel, Role>().copyProperties(r, new Role())).collect(Collectors.toSet()));
+		user.setEnabled(true);
 		user = repository.save(user);
 		populateUserModel(usermodel, user);
 		return usermodel;
@@ -81,13 +82,19 @@ public class UserServiceImpl implements UserService {
 		usermodel = new EntityUtils<User, UserModel>().copyProperties(user, usermodel);
 		user.getRoles().forEach(r -> {
 			RoleModel role = new EntityUtils<Role, RoleModel>().copyProperties(r, new RoleModel());
-			role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toSet()));
+			if(r.getPermissions() != null) {
+				role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toSet()));
+				permissions.addAll(role.getPermissions());
+				permissions.add(new PermissionModel(role.getRolename()));
+			}
 			roles.add(role);
-			permissions.addAll(role.getPermissions());
-			permissions.add(new PermissionModel(role.getRolename()));
 		});
 		usermodel.setAuthorities(permissions);
 		usermodel.setRoles(roles);
 		return usermodel;
+	}
+	
+	public boolean loadInitialData() {
+		return true;
 	}
 }

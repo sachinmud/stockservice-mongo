@@ -55,8 +55,8 @@ public class UserController {
 		return service.getRolesForUser(id);
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	@PreAuthorize("hasAuthority('user:modify')")
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	//@PreAuthorize("permitAll()")
 	public UserModel save(@RequestBody UserModel user) {
 		
 		return service.saveUser(user);
