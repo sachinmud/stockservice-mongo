@@ -2,6 +2,8 @@ package com.sachin.userservice.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,7 +59,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	//@PreAuthorize("permitAll()")
-	public UserModel save(@RequestBody UserModel user) {
+	public UserModel save(@RequestBody @Valid UserModel user) {
 		
 		return service.saveUser(user);
 	}

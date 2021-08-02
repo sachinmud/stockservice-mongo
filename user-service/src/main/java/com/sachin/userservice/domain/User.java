@@ -2,6 +2,7 @@ package com.sachin.userservice.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
@@ -10,7 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Builder;
+
 @Document
+@Builder
 public class User implements UserDetails {
 	
 	@Id
@@ -25,7 +29,7 @@ public class User implements UserDetails {
 	private boolean enabled;
 
 	@DBRef
-	private Set<Role> roles;
+	private List<Role> roles;
 	
 	public String getId() {
 		return id;
@@ -59,14 +63,14 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}

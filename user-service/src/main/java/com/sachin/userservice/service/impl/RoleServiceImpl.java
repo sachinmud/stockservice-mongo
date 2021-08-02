@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
 		Set<RoleModel> roles = new HashSet();
 		repository.findAll().forEach(r -> {
 			RoleModel role = new EntityUtils<Role, RoleModel>().copyProperties(r, new RoleModel());
-			role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toSet()));
+			role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toList()));
 			roles.add(role);
 		});
 		return roles;
@@ -50,8 +50,8 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleModel saveRole(RoleModel roleVO) {
-		Role role = new EntityUtils<RoleModel, Role>().copyProperties(roleVO, new Role());
-		role.setPermissions(roleVO.getPermissions().stream().map(p -> new EntityUtils<PermissionModel, Permission>().copyProperties(p, new Permission())).collect(Collectors.toSet()));
+		Role role = new EntityUtils<RoleModel, Role>().copyProperties(roleVO, Role.builder().build());
+		role.setPermissions(roleVO.getPermissions().stream().map(p -> new EntityUtils<PermissionModel, Permission>().copyProperties(p, new Permission())).collect(Collectors.toList()));
 		role = repository.save(role);
 		return new EntityUtils<Role, RoleModel>().copyProperties(role, roleVO);
 	}

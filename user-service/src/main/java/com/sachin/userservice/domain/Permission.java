@@ -1,11 +1,18 @@
 package com.sachin.userservice.domain;
 
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;;
+import org.springframework.security.core.GrantedAuthority;
+
+import com.sachin.userservice.domain.User.UserBuilder;
+
+import lombok.Builder;;
 
 @Document
+@Builder
 public class Permission implements GrantedAuthority {
 	
 	@Id
@@ -14,6 +21,11 @@ public class Permission implements GrantedAuthority {
 	private String authority;
 	
 	public Permission() {
+	}	
+
+	public Permission(String id, String authority) {
+		this.id = id;
+		this.authority = authority;
 	}	
 
 	public String getId() {

@@ -1,6 +1,8 @@
 package com.sachin.userservice;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,24 +43,32 @@ public class ApplicationInitializer implements ApplicationRunner {
 			
 			if(details == null) {
 				System.out.println("Loading initial data");
-				PermissionModel permission1 = new PermissionModel("role:read");
+				PermissionModel permission1 = new PermissionModel();
+				permission1.setAuthority("role:read");
 				service.savePermission(permission1);
-				PermissionModel permission2 = new PermissionModel("user:delete");
+				PermissionModel permission2 = new PermissionModel();
+				permission2.setAuthority("user:delete");
 				service.savePermission(permission2);
-				PermissionModel permission3 = new PermissionModel("user:write");
+				PermissionModel permission3 = new PermissionModel();
+				permission3.setAuthority("user:write");
 				service.savePermission(permission3);
-				PermissionModel permission4 = new PermissionModel("user:read");
+				PermissionModel permission4 = new PermissionModel();
+				permission4.setAuthority("user:read");
 				service.savePermission(permission4);
-				PermissionModel permission5 = new PermissionModel("role:modify");
+				PermissionModel permission5 = new PermissionModel();
+				permission5.setAuthority("role:modify");
 				service.savePermission(permission5);
-				PermissionModel permission6 = new PermissionModel("role:delete");
+				PermissionModel permission6 = new PermissionModel();
+				permission6.setAuthority("role:delete");
 				service.savePermission(permission6);
-				PermissionModel permission7 = new PermissionModel("permission:modify");
+				PermissionModel permission7 = new PermissionModel();
+				permission7.setAuthority("permission:modify");
 				service.savePermission(permission7);
-				PermissionModel permission8 = new PermissionModel("permission:delete");
+				PermissionModel permission8 = new PermissionModel();
+				permission8.setAuthority("permission:delete");
 				service.savePermission(permission8);
 				
-				Set<PermissionModel> adminPermissions = new HashSet<PermissionModel>();
+				List<PermissionModel> adminPermissions = new ArrayList<PermissionModel>();
 				adminPermissions.add(permission1);
 				adminPermissions.add(permission2);
 				adminPermissions.add(permission3);
@@ -68,7 +78,7 @@ public class ApplicationInitializer implements ApplicationRunner {
 				adminPermissions.add(permission7);
 				adminPermissions.add(permission8);
 				
-				Set<PermissionModel> clientPermissions = new HashSet<PermissionModel>();
+				List<PermissionModel> clientPermissions = new ArrayList<PermissionModel>();
 				clientPermissions.add(permission1);
 				clientPermissions.add(permission4);
 				
@@ -87,7 +97,7 @@ public class ApplicationInitializer implements ApplicationRunner {
 				adminUser.setFullname("Admin User");
 				adminUser.setPassword("password");
 				adminUser.setEnabled(true);
-				Set<RoleModel> adminroles = new HashSet<RoleModel>();
+				List<RoleModel> adminroles = new ArrayList<RoleModel>();
 				adminroles.add(adminrole);
 				adminUser.setRoles(adminroles);
 				userService.saveUser(adminUser);
@@ -97,7 +107,7 @@ public class ApplicationInitializer implements ApplicationRunner {
 				clientUser.setFullname("Client User");
 				clientUser.setPassword("password");
 				clientUser.setEnabled(true);
-				Set<RoleModel> clientroles = new HashSet<RoleModel>();
+				List<RoleModel> clientroles = new ArrayList<RoleModel>();
 				clientroles.add(clientrole);
 				clientUser.setRoles(clientroles);
 				userService.saveUser(clientUser);

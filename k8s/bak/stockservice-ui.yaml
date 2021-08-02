@@ -13,7 +13,13 @@ spec:
         component: stockserviceui
     spec:
       containers:
-        - name: stockserviceui
-          image: sachinmudigere/stocksapp-stockui-service
-          ports:
-            - containerPort: 8080
+      - image: sachinmudigere/stocksapp-stockui-service
+        name: stockserviceui
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: dev
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: http://config-service:8888
+        

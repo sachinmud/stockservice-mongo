@@ -1,5 +1,6 @@
 package com.sachin.userservice.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,17 +21,26 @@ import com.sachin.userservice.domain.User;
 import com.sachin.userservice.model.PermissionModel;
 import com.sachin.userservice.model.RoleModel;
 import com.sachin.userservice.model.UserModel;
+import com.sachin.userservice.repository.RoleRepository;
 import com.sachin.userservice.repository.UserRepository;
+import com.sachin.userservice.service.RoleService;
 import com.sachin.userservice.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	@Autowired
 	UserRepository repository;
+	
+	RoleService roleService;
+	
+	@Autowired
+	public UserServiceImpl(UserRepository repository, RoleService roleService, PasswordEncoder passwordEncoder) {
+		this.repository = repository;
+		this.roleService = roleService;
+		this.passwordEncoder = passwordEncoder;
+	}
 	
 	public List<UserModel> getAllUsers() {
 		
@@ -52,9 +62,10 @@ public class UserServiceImpl implements UserService {
 	
 	public UserModel saveUser(UserModel usermodel) {
 		
-		User user = new EntityUtils<UserModel, User>().copyProperties(usermodel, new User());
+		User user = new EntityUtils<UserModel, User>().copyProperties(usermodel, User.builder().build());
 		user.setPassword(passwordEncoder.encode(usermodel.getPassword()));
-		user.setRoles(usermodel.getRoles().stream().map(r -> new EntityUtils<RoleModel, Role>().copyProperties(r, new Role())).collect(Collectors.toSet()));
+		usermodel.getRoles().forEach(r -> {if(r.getId() == null) { r.setId(roleService.getRoleByName(r.getRolename()).getId());}});
+		user.setRoles(usermodel.getRoles().stream().map(r -> new EntityUtils<RoleModel, Role>().copyProperties(r, Role.builder().build())).collect(Collectors.toList()));
 		user.setEnabled(true);
 		user = repository.save(user);
 		populateUserModel(usermodel, user);
@@ -76,16 +87,18 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	private UserModel populateUserModel(UserModel usermodel, User user) {
-		Set<RoleModel> roles = new HashSet<>();
-		Set<PermissionModel> permissions = new HashSet<>();
+		List<RoleModel> roles = new ArrayList<>();
+		List<PermissionModel> permissions = new ArrayList<>();
 
 		usermodel = new EntityUtils<User, UserModel>().copyProperties(user, usermodel);
 		user.getRoles().forEach(r -> {
 			RoleModel role = new EntityUtils<Role, RoleModel>().copyProperties(r, new RoleModel());
 			if(r.getPermissions() != null) {
-				role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toSet()));
+				role.setPermissions(r.getPermissions().stream().map(p -> new EntityUtils<Permission, PermissionModel>().copyProperties(p, new PermissionModel())).collect(Collectors.toList()));
 				permissions.addAll(role.getPermissions());
-				permissions.add(new PermissionModel(role.getRolename()));
+				PermissionModel permission = new PermissionModel();
+				permission.setAuthority(role.getRolename());
+				permissions.add(permission);
 			}
 			roles.add(role);
 		});

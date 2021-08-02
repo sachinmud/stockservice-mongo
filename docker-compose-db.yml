@@ -1,11 +1,31 @@
-version: '3'
+version: '3.8'
 services:
-  mysql:
-    build: ./mysql
+  mongo:
+    image: mongo:4.4.7
+    container_name: mongo
+    hostname: mongo
     ports:
-      - 3306:3306
+      - 27017:27017
     environment:
-      - MYSQL_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_USERNAME:"root"
+      - MONGO_INITDB_ROOT_PASSWORD:"password"
+      - MONGO_INITDB_DATABASE:"stockservicedb"
+      - MONGO_DB_USERNAME:"admin"
+      - MONGO_DB_PASSWORD:"password"
+    volumes:
+      - ./mongo/data/:/data/db/
+      - ./mongo/log/:/var/log/mongodb/      
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME:"root"
+      - ME_CONFIG_MONGODB_ADMINPASSWORD:"password"
+    depends_on:
+      - mongo
 
 
 

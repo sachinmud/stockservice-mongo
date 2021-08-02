@@ -1,8 +1,8 @@
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\userservice\model\RoleModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\userservice\model\UserModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\commons\util\EntityUtils.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\portfolioservice\model\UserPortfolioModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\portfolioservice\model\StockItemModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\portfolioservice\model\StockPortfolioModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\userservice\model\PermissionModel.java
-C:\SachinMud\StockService\stockservice\commons\src\main\java\com\sachin\tradeservice\model\StockOrderModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\src\main\java\com\sachin\portfolioservice\model\UserPortfolioModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\target\generated-sources\jsonschema2pojo\com\sachin\userservice\model\RoleModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\src\main\java\com\sachin\commons\util\EntityUtils.java
+C:\Sachin\Repositories\stockservice-mongo\commons\src\main\java\com\sachin\portfolioservice\model\StockItemModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\src\main\java\com\sachin\portfolioservice\model\StockPortfolioModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\target\generated-sources\jsonschema2pojo\com\sachin\userservice\model\PermissionModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\src\main\java\com\sachin\tradeservice\model\StockOrderModel.java
+C:\Sachin\Repositories\stockservice-mongo\commons\target\generated-sources\jsonschema2pojo\com\sachin\userservice\model\UserModel.java

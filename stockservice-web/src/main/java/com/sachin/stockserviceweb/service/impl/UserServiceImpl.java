@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.sachin.commons.util.EntityUtils;
 import com.sachin.stockserviceweb.PropertiesConfig;
 import com.sachin.stockserviceweb.service.UserService;
 import com.sachin.userservice.model.UserModel;
@@ -35,7 +36,6 @@ public class UserServiceImpl implements UserService {
 		
 		RestTemplate restTemplate = restTemplateBuilder.basicAuthentication(restUserName, restPassword).build();    
 		ResponseEntity<UserModel> user = restTemplate.getForEntity(userServiceUrl +"/v1/user/name/{username}", UserModel.class, username);
-		
 		return user.getBody();
 		
 	}

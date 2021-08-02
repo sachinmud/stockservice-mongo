@@ -1,0 +1,135 @@
+{
+  "title": "UserModel",
+  "description": "User resource object",
+  "javaInterfaces": ["java.io.Serializable","org.springframework.security.core.userdetails.UserDetails"],
+  "type": "object",
+	"properties": {
+		"id": {
+	      "description": "id",
+	      "type": "string"
+		},
+		"username": {
+	      "description": "username",
+	      "type": "string",
+	      "minLength": 1,
+	      "maxLength": 10,
+	      "message": "Username must be between 1 to 10 characters"
+		},
+		"fullname": {
+	      "description": "fullname",
+	      "type": "string",
+	      "minLength": 1,
+	      "maxLength": 50
+		},
+		"password": {
+	      "description": "password",
+	      "type": "string",
+	      "minLength": 1,
+	      "maxLength": 20
+		},
+		"enabled": {
+	      "description": "enabled",
+	      "type": "boolean"
+		},
+		"accountNonLocked": {
+	      "description": "accountNonLocked",
+	      "type": "boolean"
+		},
+		"accountNonExpired": {
+	      "description": "accountNonLocked",
+	      "type": "boolean"
+		},
+		"credentialsNonExpired": {
+	      "description": "accountNonLocked",
+	      "type": "boolean"
+		},
+		"authorities": {
+			"title": "authorities", 
+			"type": "array",
+			"items":{
+				"javaInterfaces": ["java.io.Serializable","org.springframework.security.core.GrantedAuthority"],
+				"javaType": "com.sachin.userservice.model.PermissionModel",
+				"type": "object",
+				"required": [
+					"id",
+					"authority"
+				],
+				"properties": {
+					"id": {
+				      "description": "id",
+				      "type": "string",
+				      "minLength": 1,
+				      "maxLength": 255
+					},
+					"authority": {
+				      "description": "authority",
+				      "type": "string",
+				      "minLength": 1,
+				      "maxLength": 255
+					}
+				}
+			}
+		},
+		"roles": {
+			"title": "roles", 
+			"type": "array",
+			"items":{
+				"title": "RoleModel", 
+				"javaInterfaces": ["java.io.Serializable"],
+				"type": "object",
+				"required": [
+					"id",
+					"rolename",
+					"permissions"
+				],
+				"properties": {
+					"id": {
+				      "description": "id",
+				      "type": "string",
+				      "minLength": 1,
+				      "maxLength": 255
+					},
+					"rolename": {
+				      "description": "rolename",
+				      "type": "string",
+				      "minLength": 1,
+				      "maxLength": 255
+					},
+					"permissions": {
+					  "title":"permissions",
+				      "description": "permissions",
+				      "type": "array",
+						"items":{
+							"javaInterfaces": ["java.io.Serializable","org.springframework.security.core.GrantedAuthority"],
+							"javaType": "com.sachin.userservice.model.PermissionModel",
+							"type": "object",
+							"required": [
+								"id",
+								"authority"
+							],
+							"properties": {
+								"id": {
+							      "description": "id",
+							      "type": "string",
+							      "minLength": 1,
+							      "maxLength": 255
+								},
+								"authority": {
+							      "description": "authority",
+							      "type": "string",
+							      "minLength": 1,
+							      "maxLength": 255
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+	},
+  "required": [
+    "username",
+    "password"
+  ]	
+}
