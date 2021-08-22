@@ -6,7 +6,7 @@ import java.util.List;
 
 public class StockPortfolioModel {
 	
-	private long id;
+	private String id;
 	
 	private List<StockItemModel> stockItems = new ArrayList<StockItemModel>();
 	
@@ -14,11 +14,11 @@ public class StockPortfolioModel {
 
     private Date updatedDate;
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

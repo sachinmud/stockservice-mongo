@@ -4,76 +4,43 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Reference;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "STOCKITEM")
-@EntityListeners(AuditingEntityListener.class)
+import lombok.Builder;
+
+@Document
+@Builder
 public class StockItem implements Serializable {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "STOCKITEMID")
-	private long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "STOCKPORTFOLIOID")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private StockPortfolio stockPortfolio;
-	
-	@Column(name = "CODE")
-	private String code;	
-	
-	@Column(name = "BUYDATE")
-	private Date buyDate;
+    private String id;
 
-	@Column(name = "SELLDATE")
-	private Date sellDate;
-	
-	@Column(name = "BUYPRICE")
-	private BigDecimal buyPrice;
-
-	@Column(name = "SELLPRICE")
-	private BigDecimal sellPrice;
-
-	@Column(name = "QUANTITY")
-	private long quantity;
-	
-	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
+	@CreatedDate
     private Date createdDate;
 
-    @Column(name = "UPDATEDDATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
+	@LastModifiedDate
     private Date updatedDate;
 
-	public long getId() {
-		return id;
-	}
+	@DBRef(lazy = true)
+	private StockPortfolio stockPortfolio;
+	
+	private String code;	
+	
+	private Date buyDate;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	private Date sellDate;
+	
+	private BigDecimal buyPrice;
 
+	private BigDecimal sellPrice;
+
+	private long quantity;
+	
 	public String getCode() {
 		return code;
 	}
@@ -130,6 +97,14 @@ public class StockItem implements Serializable {
 		this.quantity = quantity;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -145,5 +120,5 @@ public class StockItem implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-    
+
 }

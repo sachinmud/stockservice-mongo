@@ -3,9 +3,9 @@ package com.sachin.userservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.mongodb.MongoClientOptions;
@@ -17,9 +17,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableEurekaClient
 @EnableSwagger2
 @EnableMongoRepositories
+@EnableMongoAuditing
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
@@ -42,6 +42,5 @@ public class UserServiceApplication {
    public void onApplicationEvent(ApplicationReadyEvent event) {
 
    }
-
-	
+   
 }

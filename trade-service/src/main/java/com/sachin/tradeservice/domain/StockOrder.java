@@ -3,68 +3,43 @@ package com.sachin.tradeservice.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "STOCKORDER")
-@EntityListeners(AuditingEntityListener.class)
+import lombok.Builder;
+
+@Document
+@Builder
 public class StockOrder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ORDERID")
-	private long id;
+	private String id;
 	
-	@Column(name = "CODE")
 	private String code;	
 	
-	@Column(name = "ORDERDATE")
 	private Date orderDate;
 
-	@Column(name = "PRICE")
 	private BigDecimal price;
 
-	@Column(name = "ACTION")
 	private char action;
 
-	@Column(name = "QUANTITY")
 	private long quantity;
 	
-	@Column(name = "USERID")
     private Long userId;
 	
-	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdDate;
 
-    @Column(name = "UPDATEDDATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedDate;
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

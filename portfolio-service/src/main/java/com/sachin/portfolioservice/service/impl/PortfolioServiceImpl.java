@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 		UserPortfolioModel portfolioVO =  new UserPortfolioModel();
 		try {
-			UserPortfolio portfolio = portfolioRepository.findByUserId(Long.parseLong(userId));
+			UserPortfolio portfolio = portfolioRepository.findByUserId(userId);
 			portfolioVO = new EntityUtils<UserPortfolio, UserPortfolioModel>().copyProperties(portfolio, new UserPortfolioModel());
 		
 		} catch(Exception e) {
@@ -66,7 +67,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 		UserPortfolioModel portfolioVO =  new UserPortfolioModel();
 		try {
-			UserPortfolio portfolio = portfolioRepository.findByUserId(Long.parseLong(userId));
+			UserPortfolio portfolio = portfolioRepository.findByUserId(userId);
 			portfolioVO = new EntityUtils<UserPortfolio, UserPortfolioModel>().copyProperties(portfolio, new UserPortfolioModel());
 			portfolioVO.setStockPortfolio(getStockPortfoliosByPortfolio(String.valueOf(portfolioVO.getId())));
 			portfolioVO.getStockPortfolio().setStockItems(getStockItemsByStockPortfolio(String.valueOf(portfolioVO.getStockPortfolio().getId())));
@@ -80,7 +81,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 		UserPortfolioModel portfolioVO =  new UserPortfolioModel();
 		try {
-			UserPortfolio portfolio = portfolioRepository.findById(Long.parseLong(portfolioId)).get();
+			UserPortfolio portfolio = portfolioRepository.findById(portfolioId).get();
 			portfolioVO = new EntityUtils<UserPortfolio, UserPortfolioModel>().copyProperties(portfolio, new UserPortfolioModel());
 		
 		} catch(Exception e) {
@@ -93,7 +94,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 		UserPortfolioModel portfolioVO =  new UserPortfolioModel();
 		try {
-			UserPortfolio portfolio = portfolioRepository.findById(Long.parseLong(portfolioId)).get();
+			UserPortfolio portfolio = portfolioRepository.findById(portfolioId).get();
 			portfolioVO = new EntityUtils<UserPortfolio, UserPortfolioModel>().copyProperties(portfolio, new UserPortfolioModel());
 			logger.debug("Portfolio Id -->"+portfolioVO.getId());
 			portfolioVO.setStockPortfolio(getStockPortfoliosByPortfolio(String.valueOf(portfolioVO.getId())));
@@ -110,7 +111,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 		StockPortfolioModel stockPortfolios = null;
 		
 		try {
-			stockPortfolios = new EntityUtils<StockPortfolio, StockPortfolioModel>().copyProperties(stockPortfolioRespository.findByPortfolioId(Long.parseLong(portfolioId)), new StockPortfolioModel());
+			stockPortfolios = new EntityUtils<StockPortfolio, StockPortfolioModel>().copyProperties(stockPortfolioRespository.findByPortfolioId(new ObjectId(portfolioId)), new StockPortfolioModel());
 		
 		} catch(Exception e) {
 			logger.error(e);
@@ -121,7 +122,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	public List<StockItemModel> getStockItemsByStockPortfolio(String stockPortfolioId) {
 		List<StockItemModel> stockItems = null;
 		try {
-			stockItems = stockItemRepository.findByStockPortfolioId(Long.parseLong(stockPortfolioId)).stream().map(si -> new EntityUtils<StockItem, StockItemModel>().copyProperties(si, new StockItemModel())).collect(Collectors.toList());
+			stockItems = stockItemRepository.findByStockPortfolioId(new ObjectId(stockPortfolioId)).stream().map(si -> new EntityUtils<StockItem, StockItemModel>().copyProperties(si, new StockItemModel())).collect(Collectors.toList());
 		} catch(Exception e) {
 			logger.error(e);
 		}
@@ -131,13 +132,13 @@ public class PortfolioServiceImpl implements PortfolioService {
 	public UserPortfolioModel savePortfolio(UserPortfolioModel portfolioVO) {
 		
 		try {
-			final UserPortfolio portfolio = portfolioRepository.save(new EntityUtils<UserPortfolioModel, UserPortfolio>().copyProperties(portfolioVO, new UserPortfolio()));
+			final UserPortfolio portfolio = portfolioRepository.save(new EntityUtils<UserPortfolioModel, UserPortfolio>().copyProperties(portfolioVO, UserPortfolio.builder().build()));
 			
-			final StockPortfolio stockPortfolio = new EntityUtils<StockPortfolioModel, StockPortfolio>().copyProperties(portfolioVO.getStockPortfolio(), new StockPortfolio());
+			final StockPortfolio stockPortfolio = new EntityUtils<StockPortfolioModel, StockPortfolio>().copyProperties(portfolioVO.getStockPortfolio(), StockPortfolio.builder().build());
 			stockPortfolio.setPortfolio(portfolio);
 			stockPortfolioService.saveStockPortfolio(stockPortfolio);
 			portfolioVO.getStockPortfolio().getStockItems().forEach(si -> {
-				StockItem stockItem = new EntityUtils<StockItemModel, StockItem>().copyProperties(si, new StockItem());
+				StockItem stockItem = new EntityUtils<StockItemModel, StockItem>().copyProperties(si, StockItem.builder().build());
 				stockItem.setStockPortfolio(stockPortfolio);
 				new EntityUtils<StockItem, StockItemModel>().copyProperties(stockItemService.saveStockItem(stockItem), si);
 			});
@@ -154,13 +155,13 @@ public class PortfolioServiceImpl implements PortfolioService {
 	public UserPortfolioModel updatePortfolio(UserPortfolioModel portfolioVO) {
 		
 		try {
-			final UserPortfolio portfolio = portfolioRepository.save(new EntityUtils<UserPortfolioModel, UserPortfolio>().copyProperties(portfolioVO, new UserPortfolio()));
+			final UserPortfolio portfolio = portfolioRepository.save(new EntityUtils<UserPortfolioModel, UserPortfolio>().copyProperties(portfolioVO, UserPortfolio.builder().build()));
 			
-			final StockPortfolio stockPortfolio = new EntityUtils<StockPortfolioModel, StockPortfolio>().copyProperties(portfolioVO.getStockPortfolio(), new StockPortfolio());
+			final StockPortfolio stockPortfolio = new EntityUtils<StockPortfolioModel, StockPortfolio>().copyProperties(portfolioVO.getStockPortfolio(), StockPortfolio.builder().build());
 			stockPortfolio.setPortfolio(portfolio);
 			stockPortfolioService.saveStockPortfolio(stockPortfolio);
 			portfolioVO.getStockPortfolio().getStockItems().forEach(si -> {
-				StockItem stockItem = new EntityUtils<StockItemModel, StockItem>().copyProperties(si, new StockItem());
+				StockItem stockItem = new EntityUtils<StockItemModel, StockItem>().copyProperties(si, StockItem.builder().build());
 				stockItem.setStockPortfolio(stockPortfolio);
 				new EntityUtils<StockItem, StockItemModel>().copyProperties(stockItemService.saveStockItem(stockItem), si);
 			});
@@ -176,7 +177,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	
 	public boolean deletePortfolio(String id) {
 		try {
-			portfolioRepository.deleteById(Long.parseLong(id));
+			portfolioRepository.deleteById(id);
 			return true;
 		} catch(Exception e) {
 			logger.error(e);

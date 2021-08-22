@@ -30,13 +30,11 @@ public class RoleModel implements Serializable
 
     /**
      * id
-     * (Required)
      * 
      */
     @JsonProperty("id")
     @JsonPropertyDescription("id")
     @Size(min = 1, max = 255)
-    @NotNull
     private String id;
     /**
      * rolename
@@ -52,18 +50,15 @@ public class RoleModel implements Serializable
      * permissions
      * <p>
      * permissions
-     * (Required)
      * 
      */
     @JsonProperty("permissions")
     @JsonPropertyDescription("permissions")
     @Valid
-    @NotNull
     private List<PermissionModel> permissions = new ArrayList<PermissionModel>();
 
     /**
      * id
-     * (Required)
      * 
      */
     @JsonProperty("id")
@@ -73,7 +68,6 @@ public class RoleModel implements Serializable
 
     /**
      * id
-     * (Required)
      * 
      */
     @JsonProperty("id")
@@ -115,7 +109,6 @@ public class RoleModel implements Serializable
      * permissions
      * <p>
      * permissions
-     * (Required)
      * 
      */
     @JsonProperty("permissions")
@@ -127,7 +120,6 @@ public class RoleModel implements Serializable
      * permissions
      * <p>
      * permissions
-     * (Required)
      * 
      */
     @JsonProperty("permissions")

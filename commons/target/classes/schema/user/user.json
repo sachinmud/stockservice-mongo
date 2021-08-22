@@ -78,9 +78,7 @@
 				"javaInterfaces": ["java.io.Serializable"],
 				"type": "object",
 				"required": [
-					"id",
-					"rolename",
-					"permissions"
+					"rolename"
 				],
 				"properties": {
 					"id": {

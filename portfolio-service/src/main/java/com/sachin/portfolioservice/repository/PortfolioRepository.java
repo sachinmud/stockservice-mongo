@@ -1,16 +1,16 @@
 package com.sachin.portfolioservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.sachin.portfolioservice.domain.UserPortfolio;
 
 @Repository
-public interface PortfolioRepository extends JpaRepository<UserPortfolio, Long>{
+public interface PortfolioRepository extends MongoRepository<UserPortfolio, String>{
 	
-	@Query(value = "select * from portfolio where userid = :userId", nativeQuery = true)
-	public UserPortfolio findByUserId(@Param("userId") Long userId);
+	@Query(value = "{'userId':?0}")
+	public UserPortfolio findByUserId(@Param("userId") String userId);
 
 }
