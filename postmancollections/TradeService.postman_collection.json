@@ -1,0 +1,27 @@
+{
+	"info": {
+		"_postman_id": "5378d698-d566-451c-b332-5b516c0a5b34",
+		"name": "TradeService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BuyTrade",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"action\": \"B\",\r\n  \"code\": \"OFSS.NS\",\r\n  \"orderDate\": \"2021-08-22\",\r\n  \"price\": 4000.10,\r\n  \"quantity\": 10,\r\n  \"userId\": \"6120b151a4f86b27b07f20c2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8082/v1/trade/buystock"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "d9202edb-a924-49c8-8c32-603f755c401a",
+		"name": "PortfolioService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreatePortfolio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"admin-portfolio\",\r\n  \"stockPortfolio\": {\r\n    \"stockItems\": [\r\n      {\r\n        \"buyDate\": \"2021-08-21\",\r\n        \"buyPrice\": 3500,\r\n        \"code\": \"OFSS.NS\",\r\n        \"quantity\": 10,\r\n        \"sellDate\": \"2021-08-21\",\r\n        \"sellPrice\": 3800\r\n      }\r\n    ]\r\n  },\r\n  \"userId\": \"6120b151a4f86b27b07f20c2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/v1/portfolio/"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortfolioByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/v1/portfolio/user/6120b151a4f86b27b07f20c2/details"
+			},
+			"response": []
+		}
+	]
+}
