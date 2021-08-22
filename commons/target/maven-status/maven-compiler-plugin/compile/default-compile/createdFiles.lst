@@ -1,8 +1,0 @@
-com\sachin\portfolioservice\model\StockItemModel.class
-com\sachin\portfolioservice\model\StockPortfolioModel.class
-com\sachin\portfolioservice\model\UserPortfolioModel.class
-com\sachin\commons\util\EntityUtils.class
-com\sachin\userservice\model\UserModel.class
-com\sachin\userservice\model\PermissionModel.class
-com\sachin\tradeservice\model\StockOrderModel.class
-com\sachin\userservice\model\RoleModel.class
