@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "6d2d9087-7588-4216-9467-e2306d46b247",
+		"name": "UserService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetUserByUsername",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/v1/user/name/sachinm"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "admin"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"accountNonExpired\": true,\r\n  \"accountNonLocked\": true,\r\n  \"credentialsNonExpired\": true,\r\n  \"enabled\": true,\r\n  \"fullname\": \"sachinmudigere\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"rolename\": \"ROLE_ADMIN\"\r\n    }\r\n  ],\r\n  \"username\": \"sachinm\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/v1/user/register"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": {
+			"password": "password",
+			"username": "admin"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

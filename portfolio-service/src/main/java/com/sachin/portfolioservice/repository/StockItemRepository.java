@@ -2,19 +2,18 @@ package com.sachin.portfolioservice.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.sachin.portfolioservice.domain.StockItem;
 
 @Repository
-public interface StockItemRepository extends JpaRepository<StockItem, Long> {
+public interface StockItemRepository extends MongoRepository<StockItem, String> {
 	
-	@Query(value = "select * from stockitem where stockportfolioid = :stockPortfolioId", nativeQuery = true)
-	List<StockItem> findByStockPortfolioId(@Param("stockPortfolioId") Long stockPortfolioId);
+	@Query(value = "{'stockPortfolio.$id':?0}")
+	List<StockItem> findByStockPortfolioId(@Param("stockPortfolioId") ObjectId stockPortfolioId);
 
 }

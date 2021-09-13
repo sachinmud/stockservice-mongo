@@ -23,6 +23,7 @@
         <module>portfolio-service</module>
         <module>trade-service</module>
         <module>stockservice-web</module>
+        <module>stockdetails-service</module>
     </modules>
     <dependencyManagement>
     <dependencies>

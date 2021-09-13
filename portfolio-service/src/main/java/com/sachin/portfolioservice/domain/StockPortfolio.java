@@ -2,68 +2,47 @@ package com.sachin.portfolioservice.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Reference;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "STOCKPORTFOLIO")
-@EntityListeners(AuditingEntityListener.class)
+import lombok.Builder;
+
+@Document
+@Builder
 public class StockPortfolio implements Serializable {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "STOCKPORTFOLIOID")
-	private long id;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PORTFOLIOID")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private UserPortfolio portfolio;
-	
-	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
+    private String id;
+
+	@CreatedDate
     private Date createdDate;
 
-    @Column(name = "UPDATEDDATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
+	@LastModifiedDate
     private Date updatedDate;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
+	@DBRef(lazy = true)
+	private UserPortfolio portfolio;
+	
+	
 	public UserPortfolio getPortfolio() {
 		return portfolio;
 	}
 
 	public void setPortfolio(UserPortfolio portfolio) {
 		this.portfolio = portfolio;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Date getCreatedDate() {
@@ -81,6 +60,5 @@ public class StockPortfolio implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-    
 
 }

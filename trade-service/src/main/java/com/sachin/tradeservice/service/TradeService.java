@@ -9,6 +9,6 @@ public interface TradeService {
 	
 	public StockOrderModel sellStock(StockOrderModel order);
 	
-	public boolean deleteOrder(long orderId);
+	public boolean deleteOrder(String orderId);
 
 }

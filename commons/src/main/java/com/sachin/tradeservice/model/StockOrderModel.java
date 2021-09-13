@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class StockOrderModel {
 
-	private long orderId;
+	private String orderId;
 	
-	private long userId;
+	private String userId;
 
 	private String code;	
 
@@ -23,19 +23,19 @@ public class StockOrderModel {
 	
 	private Date updatedDate;
 
-	public long getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(long orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 	
-	public long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

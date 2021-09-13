@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserPortfolioModel {
 	
-	private Long id;
+	private String id;
 
 	private String name;
 	
@@ -16,13 +16,13 @@ public class UserPortfolioModel {
     
     private String signature;
     
-    private Long userId;
+    private String userId;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -66,11 +66,11 @@ public class UserPortfolioModel {
 		this.signature = signature;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 }

@@ -2,60 +2,30 @@ package com.sachin.portfolioservice.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "PORTFOLIO")
-@EntityListeners(AuditingEntityListener.class)
+import lombok.Builder;
+
+@Document
+@Builder
 public class UserPortfolio implements Serializable {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "PORTFOLIOID", nullable = false)
-    private Long id;
+    private String id;
 
-	@Column(name = "NAME", nullable = false)
-	private String name;
-	
-	@Column(name = "CREATEDDATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
+	@CreatedDate
     private Date createdDate;
 
-    @Column(name = "UPDATEDDATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
+	@LastModifiedDate
     private Date updatedDate;
-    
-	@Column(name = "USERID")
-    private Long userId;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String name;
+	
+    private String userId;
 
 	public String getName() {
 		return name;
@@ -63,6 +33,22 @@ public class UserPortfolio implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Date getCreatedDate() {
@@ -80,14 +66,5 @@ public class UserPortfolio implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
     
-	
 }
