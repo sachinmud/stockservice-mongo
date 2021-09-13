@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-service
+  template:
+    metadata:
+      name: config-service-pod
+      labels:
+        app: config-service
+    spec:
+      containers:
+        - name: config-service-container
+          image: sachinmudigere/config-service:latest
+          ports:
+            - containerPort: 8888
+
+---
+
+apiVersion: v1
+kind: Service          
+metadata:
+  name: config-service-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: config-service
+  ports:
+    - name: tcp
+      port: 8888
+      targetPort: 8888
+
