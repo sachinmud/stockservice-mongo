@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-import com.mongodb.MongoClientOptions;
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -32,11 +29,11 @@ public class UserServiceApplication {
          .apis(RequestHandlerSelectors.basePackage("com.sachin.userservice.controller")).paths(PathSelectors.regex("/.*")).build();
    }	
 	
-   @Bean
+/*   @Bean
    public MongoClientOptions mongoOptions() {
 	   
 	   return MongoClientOptions.builder().socketTimeout(30000).maxConnectionIdleTime(6000).build();
-   }
+   }*/
    
    @EventListener
    public void onApplicationEvent(ApplicationReadyEvent event) {

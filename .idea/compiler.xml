@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="stockservice-web" />
+        <module name="stockdetails-service" />
+        <module name="config-service" />
+        <module name="trade-service" />
+        <module name="stockdetailsconsumer-service" />
+        <module name="stockservice-analyser" />
+        <module name="user-service" />
+        <module name="stockdetailsprocessor-service" />
+        <module name="discovery-service" />
+        <module name="commons" />
+        <module name="portfolio-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="config-service" options="-parameters" />
+      <module name="discovery-service" options="-parameters" />
+      <module name="portfolio-service" options="-parameters" />
+      <module name="stockdetails-service" options="-parameters" />
+      <module name="stockdetailsconsumer-service" options="-parameters" />
+      <module name="stockdetailsprocessor-service" options="-parameters" />
+      <module name="stockservice-analyser" options="-parameters" />
+      <module name="stockservice-web" options="-parameters" />
+      <module name="trade-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+    </option>
+  </component>
+</project>
